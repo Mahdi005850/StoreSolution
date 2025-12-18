@@ -1,30 +1,47 @@
 ﻿using Store.BaseBackend.Interface;
 
-namespace Store.BaseBackend.Models
-{
-    internal class StoreServices : IBaseService<Store>
-    {
+namespace Store.BaseBackend.Models;
 
-        protected List<Store> items = new List<Store>();
-        public void Add(Store item)
+public class StoreServices : IBaseService<Store>
+{
+
+    protected List<Store> items = new List<Store>();
+    public void Add(Store item)
+    {
+        items.Add(item);
+    }
+    public void Delete(Store item)
+    {
+        items.Remove(item);
+    }
+
+    public void Delete(int id)
+    {
+        var item = Get(id);
+        if (item is not null)
         {
-            items.Add(item);
+            Delete(item);
         }
-        public void Delete(Store item)
-        {
-            items.Remove(item);
-        }
-        public List<Store> GetAll()
-        {
-            return items;
-        }
-        public void Reset(Store item)
-        {
-            items.Clear();
-        }
-        public void Update(Store item)
-        {
-            
-        }
+    }
+
+    public Store? Get(int id)
+    {
+        return items.SingleOrDefault(c => c.Id == id);
+    }
+
+    public List<Store> GetAll()
+    {
+        return items;
+    }
+    public void Update(Store item)
+    {
+        var itemFromDatabase = Get(item.Id);
+        if (itemFromDatabase is null) return;
+
+        itemFromDatabase.NameBrand = item.NameBrand;
+        itemFromDatabase.Telephone = item.Telephone;
+        itemFromDatabase.PostalCode = item.PostalCode;
+        itemFromDatabase.Address = item.Address;
+        itemFromDatabase.User = item.User;
     }
 }

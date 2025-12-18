@@ -13,16 +13,36 @@ public class UserServices : IBaseService<User>
     {
         items.Remove(item);
     }
+
+    public void Delete(int id)
+    {
+        var item = Get(id);
+        if (item is not null)
+        {
+            Delete(item);
+        }
+    }
+
+    public User? Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public List<User> GetAll()
     {
         return items;
     }
-    public void Reset(User item)
-    {
-        items.Clear();
-    }
     public void Update(User item)
     {
+        var itemFromDatabase = Get(item.Id);
+        if (itemFromDatabase is null) return;
 
+        itemFromDatabase.FirstName = item.FirstName;
+        itemFromDatabase.LastName = item.LastName;
+        itemFromDatabase.BirthDate = item.BirthDate;
+        itemFromDatabase.NationalCode = item.NationalCode;
+        itemFromDatabase.Email = item.Email;
+        itemFromDatabase.Adress = item.Adress;
+        
     }
 }

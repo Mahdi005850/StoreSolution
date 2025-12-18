@@ -1,9 +1,7 @@
-﻿using Store.BaseBackend.Models;
-using Store.BaseBackend.Interface;
+﻿using Store.BaseBackend.Interface;
 
 namespace Store.BaseBackend.Models;
-
-internal class PaymentServices : IBaseService<Payment>
+public class PaymentServices : IBaseService<Payment>
 {
     protected List<Payment> items = new List<Payment>();
     public void Add(Payment item)
@@ -14,16 +12,34 @@ internal class PaymentServices : IBaseService<Payment>
     {
         items.Remove(item);
     }
+
+    public void Delete(int id)
+    {
+        var item = Get(id);
+        if (item is not null)
+        {
+            Delete(item);
+        }
+    }
+
+    public Payment? Get(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public List<Payment> GetAll()
     {
         return items;
     }
-    public void Reset(Payment item)
-    {
-        items.Clear();
-    }
     public void Update(Payment item)
     {
-        throw new NotImplementedException();
+        var itemFromDatabase = Get(item.Id);
+        if (itemFromDatabase is null) return;
+
+        itemFromDatabase.PaymentDateTime = item.PaymentDateTime;
+        itemFromDatabase.Amount = item.Amount;
+        itemFromDatabase.Status = item.Status;
+        itemFromDatabase.PaymentType = item.PaymentType;
+        itemFromDatabase.IsCompleted = item.IsCompleted;
     }
 }

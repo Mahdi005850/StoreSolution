@@ -12,4 +12,5 @@ public interface IBaseService<T> where T : BaseModel
     // public void Delete(int id);
     // public void Delete(IEnumerable<int> ids);
     public void Update(T item);
+    public void Reset(T item);
 }

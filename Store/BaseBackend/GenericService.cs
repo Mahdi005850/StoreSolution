@@ -1,8 +1,9 @@
-﻿namespace Store.BaseBackend;
-
-public class GenericService<T>
+﻿namespace Store.BaseBackend
 {
-    public GenericService()
+    internal class GenericService<T>
     {
+        public GenericService()
+        {
+        }
     }
 }

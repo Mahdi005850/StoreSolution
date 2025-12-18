@@ -31,6 +31,10 @@ public class OrderServices : IBaseService<Order>
     {
         return items;
     }
+    public void Reset(Order item)
+    {
+        items.Clear();
+    }
     public void Update(Order item)
     {
         var itemFromDatabase = Get(item.Id);
